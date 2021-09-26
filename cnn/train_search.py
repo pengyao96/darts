@@ -104,7 +104,7 @@ def main():
         optimizer, float(args.epochs), eta_min=args.learning_rate_min)
 
   architect = Architect(model, args)
-
+  max_acc1 = 0.0
   for epoch in range(args.epochs):
     scheduler.step()
     lr = scheduler.get_lr()[0]
@@ -123,8 +123,9 @@ def main():
     # validation
     valid_acc, valid_obj = infer(valid_queue, model, criterion)
     logging.info('valid_acc %f', valid_acc)
-
-    utils.save(model, os.path.join(args.save, 'weights.pt'))
+    if valid_acc > max_acc1:
+      max_acc1 = valid_acc
+      utils.save(model, os.path.join(args.save, 'weights.pt'))
 
 
 def train(train_queue, valid_queue, model, architect, criterion, optimizer, lr):
