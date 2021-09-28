@@ -125,7 +125,7 @@ def main():
     logging.info('valid_acc %f', valid_acc)
     if valid_acc > max_acc1:
       max_acc1 = valid_acc
-      utils.save(model, os.path.join(args.save, 'weights.pt'))
+    utils.save(model, os.path.join(args.save, 'weights.pt'))
 
 
 def train(train_queue, valid_queue, model, architect, criterion, optimizer, lr):
